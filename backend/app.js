@@ -2,7 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-mongoose.connect('mongodb+srv://TCox972:Mafiouz97233@cluster0.ygrzs.mongodb.net/cheDatabase?retryWrites=true&w=majority',
+require('dotenv').config()
+mongoose.connect(process.env.DATABASE,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
