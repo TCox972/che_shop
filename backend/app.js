@@ -2,6 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+const userRoutes = require('./routes/user')
+
 require('dotenv').config()
 mongoose.connect(process.env.DATABASE,
     {
@@ -22,5 +24,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+app.use('/api/auth', userRoutes)
 
 module.exports = app
