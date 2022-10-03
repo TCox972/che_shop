@@ -53,10 +53,31 @@ exports.login = (req, res, next) => {
         .catch(err => res.status(500).json({err}))
 }
 
-exports.modify = (req, res, next) => {
-
+exports.modifyPassword = (req, res, next) => {
+    User.findOne({_id: req.params.id})
+        .then(user => {
+            if(!user) {
+                return res.status(401).json({error : "Utilisateur inexistant."})
+            }
+            bcrypt.compare(req.body.password, user.password)
+                .then(valid => {
+                    if(!valid){
+                        return res.status(401).json({error: "Mot de passe incorrect."})
+                    }
+                    bcrypt.hash(req.body.newPassword, 10)
+                        .then(hash => {
+                            user.password = hash
+                            user.save()
+                                .then(() => res.status(200).json({message : 'Mot de passe modifié !'}))
+                                .catch(error => res.status(400).json({error}))
+                        })
+                        .catch(error => res.status(400).json({error : 'Il y a une erreur'}))
+                })
+                .catch(error => res.status(500).json({error}))
+        })
+        .catch(error => res.status(500).json({error}))
 }
 
 exports.delete = (req, res, next) => {
-    
+
 }

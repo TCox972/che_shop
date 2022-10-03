@@ -6,7 +6,7 @@ const userCtrl = require('../controllers/user')
 
 router.post('/signup', userCtrl.signup)
 router.post('/login', userCtrl.login)
-router.put('/:id', verifyTokenAndAuthorization, userCtrl.modify)
+router.put('/:id', verifyTokenAndAuthorization, userCtrl.modifyPassword)
 router.delete('/:id', verifyTokenAndAuthorization, userCtrl.delete)
 
 module.exports = router
